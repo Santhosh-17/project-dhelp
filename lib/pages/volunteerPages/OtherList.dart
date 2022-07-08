@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:d_help/modal/FoodModel.dart';
-import 'package:d_help/modal/OtherRequestModel.dart';
+import 'package:d_help/modal/otherRequestModel.dart';
 import 'package:flutter/material.dart';
 
 class OtherList extends StatefulWidget {
@@ -56,6 +55,12 @@ class _OtherListState extends State<OtherList> {
             .toList());
   }
 
+  setRequestStatus(uid) async{
+    await FirebaseFirestore.instance
+        .collection("otherRequest")
+        .doc(uid)
+        .update({'isRequestAccpeted': 'Request Accepted!'});
+  }
 
   Widget buildList(OtherRequestModel otherRequestModel) => ListTile(
     title: Text('${otherRequestModel.need!}'),
@@ -65,20 +70,36 @@ class _OtherListState extends State<OtherList> {
         context: context,
         builder: (BuildContext context){
           return AlertDialog(
-            title: Text("Alert Dialog"),
-            content: Text("Dialog Content"),
+            title: Text("Other Emergency Request"),
+            content: Text("Person Name: ${otherRequestModel.userName}\nContact No. ${otherRequestModel.phoneNo}\nTheir Need: ${otherRequestModel.need}\nLocation: ${otherRequestModel.location}"),
             actions: [
-              FlatButton(                     // FlatButton widget is used to make a text to work like a button
-                textColor: Colors.black,
-                onPressed: () {},             // function used to perform after pressing the button
-                child: Text('CANCEL'),
-              ),
-              FlatButton(
-                textColor: Colors.black,
+              otherRequestModel.isRequestAccpeted == "Not accepted currently!" ? TextButton(                     // FlatButton widget is used to make a text to work like a button
                 onPressed: () {
-
-                },
-                child: Text('ACCEPT REQUEST'),
+                  Navigator.of(context).pop();
+                },             // function used to perform after pressing the button
+                child: Text('CANCEL',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ) : Text(''),
+              otherRequestModel.isRequestAccpeted == "Not accepted currently!" ? TextButton(
+                onPressed: () {
+                  setRequestStatus(otherRequestModel.uid);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      new SnackBar(content: new Text("Successfully Accepted! :) ")));
+                  Navigator.of(context).pop();
+                },             // function used to perform after pressing the button
+                child: Text('ACCEPT REQUEST',
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ) : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(otherRequestModel.isRequestAccpeted!),
               ),
             ],
           );

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:d_help/Utils.dart';
 import 'package:d_help/modal/OtherRequestModel.dart';
 import 'package:d_help/modal/UserModel.dart';
 import 'package:d_help/pages/profile_page.dart';
@@ -22,7 +23,7 @@ class _OtherRequestState extends State<OtherRequest> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final locationEditingController = new TextEditingController();
+  final locationEditingController = new TextEditingController(text: Utils.userLocation);
   final needsEditingController = new TextEditingController();
   final quantityEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();

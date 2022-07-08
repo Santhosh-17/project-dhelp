@@ -55,9 +55,56 @@ class _MedicineListState extends State<MedicineList> {
             .toList());
   }
 
+  setRequestStatus(uid) async{
+    await FirebaseFirestore.instance
+        .collection("medicineRequest")
+        .doc(uid)
+        .update({'isRequestAccpeted': 'Request Accepted!'});
+  }
 
   Widget buildList(Medicinemodel medicineModel) => ListTile(
     title: Text('${medicineModel.medicineName!} - ${medicineModel.sickness}'),
     subtitle: Text(medicineModel.location!),
+    onTap: (){
+      showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Medicine Request"),
+            content: Text("Person Name: ${medicineModel.userName}\nContact No. ${medicineModel.phoneNo}\nMedicine Name: ${medicineModel.medicineName}\nDosage: ${medicineModel.dosage}\nSickness : ${medicineModel.sickness}\nLocation: ${medicineModel.location}"),
+            actions: [
+              medicineModel.isRequestAccpeted == "Not accepted currently!" ? TextButton(                     // FlatButton widget is used to make a text to work like a button
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },             // function used to perform after pressing the button
+                child: Text('CANCEL',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ) : Text(''),
+              medicineModel.isRequestAccpeted == "Not accepted currently!" ? TextButton(
+                onPressed: () {
+                  setRequestStatus(medicineModel.uid);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      new SnackBar(content: new Text("Successfully Accepted! :) ")));
+                  Navigator.of(context).pop();
+                },             // function used to perform after pressing the button
+                child: Text('ACCEPT REQUEST',
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ) : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(medicineModel.isRequestAccpeted!),
+              ),
+            ],
+          );
+        },
+      );
+    },
   );
 }

@@ -1,4 +1,6 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:d_help/Utils.dart';
 import 'package:d_help/common/theme_helper.dart';
 import 'package:d_help/modal/FoodModel.dart';
 import 'package:d_help/modal/UserModel.dart';
@@ -6,6 +8,8 @@ import 'package:d_help/pages/profile_page.dart';
 import 'package:d_help/pages/widgets/header_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 
 class FoodRequest extends StatefulWidget {
   const FoodRequest({Key? key}) : super(key: key);
@@ -23,13 +27,14 @@ class _FoodRequestState extends State<FoodRequest> {
   final _formKey = GlobalKey<FormState>();
 
 
-  final locationEditingController = new TextEditingController();
+  final locationEditingController = new TextEditingController(text: Utils.userLocation);
   final foodTypeEditingController = new TextEditingController();
   final quantityEditingController = new TextEditingController();
   final aadharNumberEditingController = new TextEditingController();
 
   String? Name = "";
   String? phone ="";
+
 
   @override
   void initState()  {
@@ -41,8 +46,10 @@ class _FoodRequestState extends State<FoodRequest> {
     await _fetch();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    print( Utils.userLocation);
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(

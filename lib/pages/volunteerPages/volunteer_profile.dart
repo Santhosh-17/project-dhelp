@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:d_help/Utils.dart';
 import 'package:d_help/modal/FoodModel.dart';
 import 'package:d_help/modal/UserModel.dart';
 import 'package:d_help/pages/login_page.dart';
@@ -54,41 +55,41 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                   Theme.of(context).accentColor,
                 ])),
           ),
-          actions: [
-            Container(
-              margin: EdgeInsets.only(
-                top: 16,
-                right: 16,
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Icon(Icons.notifications),
-                  Positioned(
-                    right: 0,
-                    child: Container(
-                      padding: EdgeInsets.all(1),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      constraints: BoxConstraints(
-                        minWidth: 12,
-                        minHeight: 12,
-                      ),
-                      child: Text(
-                        '5',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 8,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+          // actions: [
+          //   Container(
+          //     margin: EdgeInsets.only(
+          //       top: 16,
+          //       right: 16,
+          //     ),
+          //     child: Stack(
+          //       children: <Widget>[
+          //        // Icon(Icons.notifications),
+          //         Positioned(
+          //           right: 0,
+          //           child: Container(
+          //             padding: EdgeInsets.all(1),
+          //             decoration: BoxDecoration(
+          //               color: Colors.red,
+          //               borderRadius: BorderRadius.circular(6),
+          //             ),
+          //             constraints: BoxConstraints(
+          //               minWidth: 12,
+          //               minHeight: 12,
+          //             ),
+          //             child: Text(
+          //               '5',
+          //               style: TextStyle(
+          //                 color: Colors.white,
+          //                 fontSize: 8,
+          //               ),
+          //               textAlign: TextAlign.center,
+          //             ),
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //   )
+          // ],
         ),
         drawer: Drawer(
           child: Container(
@@ -130,115 +131,115 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                     ),
                   ),
                 ),
-                ListTile(
-                  //leading: Icon(Icons.screen_lock_landscape_rounded, size: _drawerIconSize, color: Theme.of(context).accentColor,),
-                  leading: IconButton(
-                      icon: Image.asset(
-                        "assets/icons/food.png",
-                      ),
-                      onPressed: () {},
-                      padding: EdgeInsets.all(15.0)),
-                  title: Text(
-                    'Request Food',
-                    style: TextStyle(
-                        fontSize: 17, color: Theme.of(context).accentColor),
-                  ),
-                  onTap: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => FoodRequest()));
-                  },
-                ),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 1,
-                ),
-                ListTile(
-                  //leading: Icon(Icons.login_rounded,size: _drawerIconSize,color: Theme.of(context).accentColor),
-                  leading: IconButton(
-                      icon: Image.asset(
-                        "assets/icons/medicine.png",
-                      ),
-                      onPressed: () {},
-                      padding: EdgeInsets.all(15.0)),
-                  title: Text(
-                    'Request Medicine',
-                    style: TextStyle(
-                        fontSize: _drawerFontSize,
-                        color: Theme.of(context).accentColor),
-                  ),
-                  onTap: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => MedicineRequest()),);
-                  },
-                ),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 1,
-                ),
-                ListTile(
-                  //leading: Icon(Icons.person_add_alt_1, size: _drawerIconSize,color: Theme.of(context).accentColor),
-                  leading: IconButton(
-                      icon: Image.asset(
-                        "assets/icons/shelter.png",
-                      ),
-                      onPressed: () {},
-                      padding: EdgeInsets.all(15.0)),
-                  title: Text(
-                    'Request shelter',
-                    style: TextStyle(
-                        fontSize: _drawerFontSize,
-                        color: Theme.of(context).accentColor),
-                  ),
-                  onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterRequest()),);
-                  },
-                ),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 1,
-                ),
-                ListTile(
-                  //leading: Icon(Icons.password_rounded, size: _drawerIconSize,color: Theme.of(context).accentColor,),
-                  leading: IconButton(
-                      icon: Image.asset(
-                        "assets/icons/other.png",
-                      ),
-                      onPressed: () {},
-                      padding: EdgeInsets.all(15.0)),
-                  title: Text(
-                    'Other Emergency requirements',
-                    style: TextStyle(
-                        fontSize: _drawerFontSize,
-                        color: Theme.of(context).accentColor),
-                  ),
-                  onTap: () {
-                    // Navigator.push( context, MaterialPageRoute(builder: (context) => OtherRequest()),);
-                  },
-                ),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 1,
-                ),
-                ListTile(
-                  //leading: Icon(Icons.verified_user_sharp, size: _drawerIconSize,color: Theme.of(context).accentColor,),
-                  leading: IconButton(
-                      icon: Image.asset(
-                        "assets/icons/edit.png",
-                      ),
-                      onPressed: () {},
-                      padding: EdgeInsets.all(15.0)),
-                  title: Text(
-                    'Edit profile',
-                    style: TextStyle(
-                        fontSize: _drawerFontSize,
-                        color: Theme.of(context).accentColor),
-                  ),
-                  onTap: () {
-                    //Navigator.push( context, MaterialPageRoute(builder: (context) => ForgotPasswordVerificationPage()), );
-                  },
-                ),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 1,
-                ),
+                // ListTile(
+                //   //leading: Icon(Icons.screen_lock_landscape_rounded, size: _drawerIconSize, color: Theme.of(context).accentColor,),
+                //   leading: IconButton(
+                //       icon: Image.asset(
+                //         "assets/icons/food.png",
+                //       ),
+                //       onPressed: () {},
+                //       padding: EdgeInsets.all(15.0)),
+                //   title: Text(
+                //     'Request Food',
+                //     style: TextStyle(
+                //         fontSize: 17, color: Theme.of(context).accentColor),
+                //   ),
+                //   onTap: () {
+                //     //Navigator.push(context, MaterialPageRoute(builder: (context) => FoodRequest()));
+                //   },
+                // ),
+                // Divider(
+                //   color: Theme.of(context).primaryColor,
+                //   height: 1,
+                // ),
+                // ListTile(
+                //   //leading: Icon(Icons.login_rounded,size: _drawerIconSize,color: Theme.of(context).accentColor),
+                //   leading: IconButton(
+                //       icon: Image.asset(
+                //         "assets/icons/medicine.png",
+                //       ),
+                //       onPressed: () {},
+                //       padding: EdgeInsets.all(15.0)),
+                //   title: Text(
+                //     'Request Medicine',
+                //     style: TextStyle(
+                //         fontSize: _drawerFontSize,
+                //         color: Theme.of(context).accentColor),
+                //   ),
+                //   onTap: () {
+                //     //Navigator.push(context, MaterialPageRoute(builder: (context) => MedicineRequest()),);
+                //   },
+                // ),
+                // Divider(
+                //   color: Theme.of(context).primaryColor,
+                //   height: 1,
+                // ),
+                // ListTile(
+                //   //leading: Icon(Icons.person_add_alt_1, size: _drawerIconSize,color: Theme.of(context).accentColor),
+                //   leading: IconButton(
+                //       icon: Image.asset(
+                //         "assets/icons/shelter.png",
+                //       ),
+                //       onPressed: () {},
+                //       padding: EdgeInsets.all(15.0)),
+                //   title: Text(
+                //     'Request shelter',
+                //     style: TextStyle(
+                //         fontSize: _drawerFontSize,
+                //         color: Theme.of(context).accentColor),
+                //   ),
+                //   onTap: () {
+                //     // Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterRequest()),);
+                //   },
+                // ),
+                // Divider(
+                //   color: Theme.of(context).primaryColor,
+                //   height: 1,
+                // ),
+                // ListTile(
+                //   //leading: Icon(Icons.password_rounded, size: _drawerIconSize,color: Theme.of(context).accentColor,),
+                //   leading: IconButton(
+                //       icon: Image.asset(
+                //         "assets/icons/other.png",
+                //       ),
+                //       onPressed: () {},
+                //       padding: EdgeInsets.all(15.0)),
+                //   title: Text(
+                //     'Other Emergency requirements',
+                //     style: TextStyle(
+                //         fontSize: _drawerFontSize,
+                //         color: Theme.of(context).accentColor),
+                //   ),
+                //   onTap: () {
+                //     // Navigator.push( context, MaterialPageRoute(builder: (context) => OtherRequest()),);
+                //   },
+                // ),
+                // Divider(
+                //   color: Theme.of(context).primaryColor,
+                //   height: 1,
+                // ),
+                // ListTile(
+                //   //leading: Icon(Icons.verified_user_sharp, size: _drawerIconSize,color: Theme.of(context).accentColor,),
+                //   leading: IconButton(
+                //       icon: Image.asset(
+                //         "assets/icons/edit.png",
+                //       ),
+                //       onPressed: () {},
+                //       padding: EdgeInsets.all(15.0)),
+                //   title: Text(
+                //     'Edit profile',
+                //     style: TextStyle(
+                //         fontSize: _drawerFontSize,
+                //         color: Theme.of(context).accentColor),
+                //   ),
+                //   onTap: () {
+                //     //Navigator.push( context, MaterialPageRoute(builder: (context) => ForgotPasswordVerificationPage()), );
+                //   },
+                // ),
+                // Divider(
+                //   color: Theme.of(context).primaryColor,
+                //   height: 1,
+                // ),
                 ListTile(
                   //leading: Icon(Icons.logout_rounded, size: _drawerIconSize,color: Theme.of(context).accentColor,),
                   leading: IconButton(
@@ -364,7 +365,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                                                         Icon(Icons.my_location),
                                                     title: Text("Location"),
                                                     subtitle:
-                                                        Text("Tamil Nadu"),
+                                                        Text(Utils.userLocation!),
                                                   ),
                                                   ListTile(
                                                     leading: Icon(Icons.email),
@@ -635,6 +636,3 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
 //     });
 // }
 }
-
-// I just moved to new address one week ago
-// and I still didn't update my address to any official id cards(aadhar, ration card). What can I do mam?

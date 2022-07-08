@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:d_help/Utils.dart';
 import 'package:d_help/constant.dart';
 import 'package:d_help/modal/UserModel.dart';
 import 'package:d_help/pages/helpline.dart';
@@ -15,6 +16,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 
@@ -68,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     controller.addListener(onScroll);
     _callFetch();
+    getCurrentLocation();
   }
 
   _callFetch() async{
@@ -107,7 +111,24 @@ class _HomeScreenState extends State<HomeScreen> {
     )) ?? false;
   }
 
+  getCurrentLocation() async{
+    await Geolocator.isLocationServiceEnabled();
+    LocationPermission permission = await Geolocator.requestPermission();
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
+    getAddressFromCoordinates(
+        Coordinates(position.latitude,position.longitude)
+    );
+  }
+
+  getAddressFromCoordinates(Coordinates cords) async {
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(cords);
+    var first = addresses.first;
+    Utils.userLocation = "${first.featureName} : ${first.addressLine}";
+    print( Utils.userLocation);
+  }
+
   _fetch() async {
+
     final firebaseUser = await FirebaseAuth.instance.currentUser!;
     // if (firebaseUser != null)
     await FirebaseFirestore.instance
@@ -124,6 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(

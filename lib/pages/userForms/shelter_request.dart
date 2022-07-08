@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:d_help/Utils.dart';
 import 'package:d_help/common/theme_helper.dart';
 import 'package:d_help/modal/ShelterModel.dart';
 import 'package:d_help/pages/profile_page.dart';
@@ -22,7 +23,7 @@ class _ShelterRequestState extends State<ShelterRequest> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final locationEditingController = new TextEditingController();
+  final locationEditingController = new TextEditingController(text: Utils.userLocation);
   final transportEditingController = new TextEditingController();
   final quantityEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();

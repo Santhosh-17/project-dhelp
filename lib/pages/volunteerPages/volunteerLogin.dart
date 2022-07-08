@@ -1,25 +1,18 @@
-import 'package:d_help/pages/volunteerPages/volunteerLogin.dart';
+import 'package:d_help/common/theme_helper.dart';
+import 'package:d_help/pages/registration_page.dart';
 import 'package:d_help/pages/volunteerPages/volunteer_profile.dart';
+import 'package:d_help/pages/widgets/header_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:d_help/common/theme_helper.dart';
-import 'package:d_help/pages/widgets/header_widget.dart';
-
-import 'forgot_password_page.dart';
-import 'profile_page.dart';
-import 'registration_page.dart';
-import 'widgets/header_widget.dart';
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class VolunteerLogin extends StatefulWidget {
+  const VolunteerLogin({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _VolunteerLoginState createState() => _VolunteerLoginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _VolunteerLoginState extends State<VolunteerLogin> {
   double _headerHeight = 250;
   Key _formKey = GlobalKey<FormState>();
   // editing controller
@@ -57,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 60, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Sign-In into your account',
+                        'Volunteer Login Page',
                         style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(height: 30.0),
@@ -72,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                                       'Email', 'Enter your Email Id'),
                                 ),
                                 decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
+                                ThemeHelper().inputBoxDecorationShaddow(),
                               ),
                               SizedBox(height: 30.0),
                               Container(
@@ -83,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                                       'Password', 'Enter your password'),
                                 ),
                                 decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
+                                ThemeHelper().inputBoxDecorationShaddow(),
                               ),
                               SizedBox(height: 15.0),
                               // Container(
@@ -108,12 +101,12 @@ class _LoginPageState extends State<LoginPage> {
                               // ),
                               Container(
                                 decoration:
-                                    ThemeHelper().buttonBoxDecoration(context),
+                                ThemeHelper().buttonBoxDecoration(context),
                                 child: ElevatedButton(
                                   style: ThemeHelper().buttonStyle(),
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                    EdgeInsets.fromLTRB(40, 10, 40, 10),
                                     child: Text(
                                       'Sign In'.toUpperCase(),
                                       style: TextStyle(
@@ -148,35 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                                         color: Theme.of(context).accentColor),
                                   ),
                                 ])),
-                              ),
-                              SizedBox(
-                                height: 4.0,
-                              ),
-                              Container(
-                                decoration:
-                                ThemeHelper().buttonBoxDecoration(context),
-                                child: ElevatedButton(
-                                  style: ThemeHelper().buttonStyle(),
-                                  child: Padding(
-                                    padding:
-                                    EdgeInsets.fromLTRB(30, 10, 30, 10),
-                                    child: Text(
-                                      'Volunteer  Log in'.toUpperCase(),
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    //After successful login we will redirect to profile page. Let's create profile page now
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => VolunteerLogin()));
-                                  },
-                                ),
-                              ),
+                              )
                             ],
                           )),
                     ],
@@ -192,20 +157,16 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await _auth
           .signInWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text)
+          email: emailController.text, password: passwordController.text)
           .then((uid) => {
-                // Fluttertoast.showToast(msg: "Login Successful"),
-                ScaffoldMessenger.of(context).showSnackBar(
-                    new SnackBar(content: new Text("Login successful :) "))),
-                emailController.text == "volunteer1@gmail.com" ||
-                        emailController.text == "volunteer2@gmail.com"
-                    ? Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VolunteerProfile()))
-                    : Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => ProfilePage())),
-              });
+        // Fluttertoast.showToast(msg: "Login Successful"),
+        ScaffoldMessenger.of(context).showSnackBar(
+            new SnackBar(content: new Text("Login successful :) "))),
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => VolunteerProfile())),
+      });
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case "invalid-email":

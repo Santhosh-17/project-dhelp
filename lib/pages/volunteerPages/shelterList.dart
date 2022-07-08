@@ -54,11 +54,57 @@ class _ShelterListState extends State<ShelterList> {
             .map((doc) => ShelterModel.fromMap(doc.data()))
             .toList());
   }
-
+  setRequestStatus(uid) async{
+    await FirebaseFirestore.instance
+        .collection("shelterRequest")
+        .doc(uid)
+        .update({'isRequestAccpeted': 'Request Accepted!'});
+  }
 
   Widget buildList(ShelterModel shelterModel) => ListTile(
     title: Text('Current Location: ${shelterModel.location!}'),
     subtitle: Text('No. of People: ${shelterModel.quantity!}'),
+    onTap: (){
+      showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Shelter Request"),
+            content: Text("Person Name: ${shelterModel.userName}\nContact No. ${shelterModel.phoneNo}\nTransport request: ${shelterModel.transport}\nNo.of people: ${shelterModel.quantity}\nLocation: ${shelterModel.location}"),
+            actions: [
+              shelterModel.isRequestAccpeted == "Not accepted currently!" ? TextButton(                     // FlatButton widget is used to make a text to work like a button
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },             // function used to perform after pressing the button
+                child: Text('CANCEL',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ) : Text(''),
+              shelterModel.isRequestAccpeted == "Not accepted currently!" ? TextButton(
+                onPressed: () {
+                  setRequestStatus(shelterModel.uid);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      new SnackBar(content: new Text("Successfully Accepted! :) ")));
+                  Navigator.of(context).pop();
+                },             // function used to perform after pressing the button
+                child: Text('ACCEPT REQUEST',
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ) : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(shelterModel.isRequestAccpeted!),
+              ),
+            ],
+          );
+        },
+      );
+    },
   );
 
 }

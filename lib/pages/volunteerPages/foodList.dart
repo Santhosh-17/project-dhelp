@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_help/modal/FoodModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FoodList extends StatefulWidget {
@@ -55,6 +56,12 @@ class _FoodListState extends State<FoodList> {
             .toList());
   }
 
+  setRequestStatus(uid) async{
+    await FirebaseFirestore.instance
+        .collection("foodRequest")
+        .doc(uid)
+        .update({'isRequestAccpeted': 'Request Accepted!'});
+  }
 
   Widget buildList(Foodmodel foodmodel) => ListTile(
     title: Text(foodmodel.typeOfFood!),
@@ -64,20 +71,36 @@ class _FoodListState extends State<FoodList> {
         context: context,
         builder: (BuildContext context){
           return AlertDialog(
-            title: Text("Alert Dialog"),
-            content: Text("Dialog Content"),
+            title: Text("Food Request"),
+            content: Text("Person Name: ${foodmodel.userName}\nContact No. ${foodmodel.phoneNo}\nType of Food Need: ${foodmodel.typeOfFood}\nNo.of people: ${foodmodel.quantity}\nLocation: ${foodmodel.location}"),
             actions: [
-              FlatButton(                     // FlatButton widget is used to make a text to work like a button
-                textColor: Colors.black,
-                onPressed: () {},             // function used to perform after pressing the button
-                child: Text('CANCEL'),
-              ),
-              FlatButton(
-                textColor: Colors.black,
+              foodmodel.isRequestAccpeted == "Not accepted currently!" ? TextButton(                     // FlatButton widget is used to make a text to work like a button
                 onPressed: () {
-
-                },
-                child: Text('ACCEPT REQUEST'),
+                  Navigator.of(context).pop();
+                },             // function used to perform after pressing the button
+                child: Text('CANCEL',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ) : Text(''),
+              foodmodel.isRequestAccpeted == "Not accepted currently!" ? TextButton(
+                onPressed: () {
+                  setRequestStatus(foodmodel.uid);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      new SnackBar(content: new Text("Successfully Accepted! :) ")));
+                  Navigator.of(context).pop();
+                },             // function used to perform after pressing the button
+                child: Text('ACCEPT REQUEST',
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ) : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(foodmodel.isRequestAccpeted!),
               ),
             ],
           );
